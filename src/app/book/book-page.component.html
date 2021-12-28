@@ -1,0 +1,46 @@
+<app-message-modal *ngIf="displayMessageModal" [messageModal]="messageModal"></app-message-modal>
+
+<div class="div-add-book">
+	<fieldset>
+        <legend><b>{{titleSaveOrUpdate}}</b></legend>
+		  <form #addBookForm="ngForm" (ngSubmit)="saveOrUpdateBook(addBookForm)">
+			 <span><label for="Isbn" class="book-label">Isbn:</label><input name="isbn" class="book-input" type="text" required [(ngModel)]="book.isbn"></span>
+			 <span><label for="Title" class="book-label">Title:</label><input name="title" class="book-input" type="text" required [(ngModel)]="book.title"></span>
+			 <span><label for="Author" class="book-label">Author:</label><input name="author" class="book-input" type="text" required [(ngModel)]="book.author"></span>
+			 <span><label for="Total examplaries" class="book-label">Total examplaries:</label><input name="total-examplaries" class="book-input" type="number" required [(ngModel)]="book.totalExamplaries"></span>
+			 <span><label for="Release Date" class="book-label">Release Date:</label><input name="release-date" class="book-input" [matDatepicker]="myDatepicker" required [(ngModel)]="book.releaseDate" placeholder="DD/MM/YYYY"><mat-datepicker-toggle matSuffix [for] = "myDatepicker" placeholder="mm/dd/yyyy"></mat-datepicker-toggle><mat-datepicker #myDatepicker></mat-datepicker></span>
+			 <span><label for="Category" class="book-label">Category:</label><select class="book-select" name="category" required [(ngModel)]="book.category.code"><option *ngFor="let cat of categories" [value]="cat.code">{{cat.label}}</option></select> <input [value]="actionButton" class="book-submit-button" type=submit [disabled]="!addBookForm.form.valid"/></span>
+			 <span class="span-book-submit"></span>
+		  </form>
+		  <button class="clear-form-button" (click)="clearForm(addBookForm)">Clear Form</button>
+	</fieldset>
+</div>
+<div class="div-search-book"> 
+	<fieldset class="fieldset-search-book">
+        <legend><b>Search Books Form</b></legend>
+		  <form #searchBookForm="ngForm" (ngSubmit)="searchBooksByType(searchBookForm)">
+		  	 <label for="Search By" class="search-label">Search By:</label><select class="search-select" name="type" required [(ngModel)]="displayType"><option *ngFor="let type of types" [value]="type">{{type}}</option></select>
+			 <ng-container *ngIf="displayType==='Isbn'"><label for="Isbn" class="search-label">Isbn:</label><input name="isbn" class="search-input" type="text" required [(ngModel)]=isbn></ng-container>
+			 <ng-container *ngIf="displayType==='Title'"><label for="Title" class="search-label">Title:</label><input name="title" class="search-input" type="text" required [(ngModel)]=title></ng-container>
+			 <input value="Search" class="search-submit-button" type=submit [disabled]="!searchBookForm.form.valid"/>
+		  </form>
+		  <br/><br/>
+		  <ng-container *ngIf="isNoResult && isFormSubmitted"><span class="span-no-result">No Result</span></ng-container>
+		  <ng-container *ngIf="!isNoResult && isFormSubmitted">
+		     <table>
+		        <tr><th *ngFor="let head of headsTab">{{head}}</th><th></th><th></th></tr>
+		        <tr class="{{book.id}}" *ngFor="let book of searchBooksResult">
+		          <td>{{book.isbn}}</td>
+		          <td>{{book.title}}</td>
+		          <td>{{book.author}}</td>
+		          <td>{{book.releaseDate | date:'dd/MM/yyyy'}}</td>
+		          <td>{{book.registerDate | date:'dd/MM/yyyy'}}</td>
+		          <td>{{book.totalExamplaries}}</td>
+		          <td>{{book.category.label}}</td>
+		          <td><button value="Update" class="button-update-book" (click)=setUpdateBook(book)>Update</button></td><td><button value="Delete" class="button-delete-book" (click)=deleteBook(book)>Delete</button></td>
+		        </tr>
+		     </table>
+		  </ng-container>
+	</fieldset>
+</div>
+<app-back-to-menu></app-back-to-menu>

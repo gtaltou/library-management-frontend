@@ -1,0 +1,36 @@
+.div-header{
+	text-align : center;
+	margin-bottom: 3em;
+}
+
+.div-sub-header{
+	text-align : center;
+}
+
+.div-button-menu{
+	margin-bottom: 2em;
+}
+
+button{
+	border-radius: 10px;
+	height: 4em;
+	width: 40%;
+	font-size: 20px;
+	color: white;
+}
+
+button:hover{
+	cursor: pointer;
+}
+
+.button-menu-book{
+	background-color: #8A2BE2; /* BlueViolet */
+}
+
+.button-menu-customer{
+	background-color: #4682B4; /* SteelBlue */
+}
+
+.button-menu-loan{
+	background-color: #FF69B4; /* HotPink */
+}

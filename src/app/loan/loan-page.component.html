@@ -1,0 +1,45 @@
+<app-message-modal *ngIf="displayMessageModal" [messageModal]="messageModal"></app-message-modal>
+  
+  <div class="div-add-loan">
+    <fieldset>
+          <legend><b>{{titleSaveOrUpdate}}</b></legend>
+        <form #addLoanForm="ngForm" (ngSubmit)="saveLoan(addLoanForm)">
+           <span><label for="Isbn" class="loan-label">Isbn:</label><input name="isbn" class="loan-input" type="text" required [(ngModel)]="simpleLoan.isbn" [readonly]="disabledBackground"></span>
+           <span><label for="Email" class="loan-label">Email:</label><input name="email" class="loan-input" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required [(ngModel)]="simpleLoan.email" [readonly]="disabledBackground"></span>
+           <span><label for="Begin date" class="loan-label">Begin date:</label><input name="beginDate" class="loan-input" type="text" required [(ngModel)]="simpleLoan.beginDate" [matDatepicker]="myDatepicker1" [readonly]="disabledBackground" placeholder="DD/MM/YYYY"><mat-datepicker-toggle matSuffix [for] = "myDatepicker1"></mat-datepicker-toggle><mat-datepicker #myDatepicker1 [disabled]="disabledBackground"></mat-datepicker></span>
+           <span><label for="End date" class="loan-label">End date:</label><input name="endDate" class="loan-input" type="text" required [(ngModel)]="simpleLoan.endDate" [matDatepicker]="myDatepicker2" [readonly]="disabledBackground" placeholder="DD/MM/YYYY"><mat-datepicker-toggle matSuffix [for] = "myDatepicker2"></mat-datepicker-toggle><mat-datepicker #myDatepicker2 [disabled]="disabledBackground"></mat-datepicker><input [value]="actionButton" class="loan-submit-button" type=submit [disabled]="!addLoanForm.form.valid"/></span>
+        </form>
+        <button class="clear-form-button" (click)="clearForm(addLoanForm)" [disabled]="disabledBackground">Clear Form</button>
+    </fieldset>
+  </div>
+  <div class="div-search-loan" ng-disabled="disabledBackground"> 
+    <fieldset class="fieldset-search-loan">
+          <legend><b>Search Loans Form</b></legend>
+        <form #searchLoanForm="ngForm" (ngSubmit)="searchLoansByType(searchLoanForm)">
+           <label for="Search By" class="search-label">Search By:</label><select class="search-select" name="type" required [(ngModel)]="displayType"><option *ngFor="let type of types" [value]="type">{{type}}</option></select>
+         <ng-container *ngIf="displayType==='Email'"><label for="Email" class="search-label">Email:</label><input name="email" class="search-input" type="text" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required [(ngModel)]=email [readonly]="disabledBackground"></ng-container>
+         <ng-container *ngIf="displayType==='Maximum date'"><label for="Maximum date" class="search-label">Maximum date:</label><input name="maxDate" class="search-input" type="text" required [(ngModel)]=maxDate [matDatepicker]="myDatepicker3" [readonly]="disabledBackground" placeholder="DD/MM/YYYY"><mat-datepicker-toggle class="search-matDatePicker3" matSuffix [for] = "myDatepicker3"></mat-datepicker-toggle><mat-datepicker #myDatepicker3></mat-datepicker></ng-container>
+         <input value="Search" class="search-submit-button" type=submit [disabled]="!searchLoanForm.form.valid" [readonly]="disabledBackground"/>
+        </form>
+        <br/><br/>
+        <ng-container *ngIf="isNoResult && isFormSubmitted"><span class="span-no-result">No Result</span></ng-container>
+        <ng-container *ngIf="!isNoResult && isFormSubmitted">
+           <table>
+              <tr><th *ngFor="let head of headsTab">{{head}}</th><th></th><th></th></tr>
+              <tr class="" *ngFor="let loan of searchLoansResult">
+                <td>{{loan.bookDTO.isbn}}</td>
+                <td>{{loan.bookDTO.title}}</td>
+                <td>{{loan.customerDTO.email}}</td>
+                <td>{{loan.customerDTO.lastName}}</td>
+                <td>{{loan.loanBeginDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{loan.loanEndDate | date:'dd/MM/yyyy'}}</td>
+                <td><button value="Close" class="button-close-loan" (click)=closeLoan(loan) [disabled]="disabledBackground">Close Loan</button></td><td><button *ngIf="true" value="Send Email" class="button-send-email-loan" (click)=displaySendEmailForm(loan.customerDTO.id) [disabled]="disabledBackground"><img src="./assets/mail.jpg"/></button></td>
+              </tr>
+           </table>
+        </ng-container>
+    </fieldset>
+  </div>
+  <app-mail-modal *ngIf="isDisplaySendEmailForm" [customerId]="customerId" (unDisplayModal)="closeEmailForm()"></app-mail-modal>
+  <app-back-to-menu></app-back-to-menu>
+
+  

@@ -1,0 +1,95 @@
+.div-mail-form{
+    position: fixed;
+    top: 180px;
+    z-index: 9999;
+    margin-left: 18em;
+    width: 55%;
+    height: 50%;
+    opacity: 1;
+    background-color: saddlebrown;
+    border: 10px solid slategrey;
+    box-shadow: 0px 0px 20px black;
+    border-radius: 10px;
+}
+
+.span-mail-form{
+    display: block;
+    margin-bottom: 2em;
+}
+
+.span-mail-form-button{
+    display: block;
+    bottom: 5px;
+}
+
+.fieldset-mail-form{
+    padding: 0.3em;
+    width: 98%;
+    height: 95%;
+}
+
+/*.loan-mail-label{
+	margin-right: 22em;
+} */
+
+.loan-mail-input{
+    width: 40%;
+	height: 10%;
+	margin-right: 1em;
+	margin-bottom: 1em;
+	border-radius: 4px; /* Rounded borders */
+  	border: 1px solid #ccc; /* Gray border */
+	position: absolute;
+	left:9.8em;
+}
+
+textarea{
+    resize: none;
+    position: absolute;
+    left: 10em;
+    width: 80%;
+    height: 60%;
+    border-radius: 4px;
+    border: 1px solid #ccc; /* Gray Color border */
+    margin-bottom: 1em;
+}
+
+.loan-mail-submit-button{
+    float: left;
+	border-radius: 4px; /* Rounded borders */
+	background-color: cadetblue; /* Rounded borders */
+  	border: 1px solid #ccc; /* Gray Color border */
+  	height: 1.7em;
+  	width: 10%;
+  	color: white;
+  	font-size: 20px;
+    position: absolute;
+    bottom: 1em;
+    margin-left: 6.1em;
+    margin-top: 2em;
+}
+
+.close-mail-submit-button{
+    left: 12em;
+    background-color: cadetblue;
+}
+
+.loan-mail-submit-button:hover{
+	cursor: pointer;
+}
+
+img {
+    float: right;
+    margin-top: -20px;
+    margin-right: -20px;
+    top: 0;
+    right: 0;
+    position: absolute;
+    width: 2em;
+    height: 2em;
+    border-radius: 4em;
+}
+
+img:hover{
+    cursor: pointer;
+}

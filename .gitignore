@@ -1,0 +1,33 @@
+/node_modules/
+
+*.class
+
+
+
+#Build directory
+/build
+
+/build/
+
+#Package Files
+*.jar
+
+*.war
+
+*.ear
+
+
+
+#Executable Files
+
+*.exe
+
+
+
+# Target directory
+
+/target
+/
+
+
+/dist/

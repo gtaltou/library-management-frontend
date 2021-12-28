@@ -1,0 +1,43 @@
+<app-message-modal *ngIf="displayMessageModal" [messageModal]="messageModal"></app-message-modal>
+
+<div class="div-add-customer">
+    <fieldset>
+          <legend><b>{{titleSaveOrUpdate}}</b></legend>
+        <form #addCustomerForm="ngForm" (ngSubmit)="saveOrUpdateCustomer(addCustomerForm)">
+           <span><label for="First Name" class="customer-label">First Name:</label><input name="firstName" class="customer-input" type="text" required [(ngModel)]="customer.firstName"></span>
+           <span><label for="Last Name" class="customer-label">Last Name:</label><input name="lastName" class="customer-input" type="text" required [(ngModel)]="customer.lastName"></span>
+           <span><label for="Job" class="customer-label">Job:</label><input name="job" class="customer-input" type="text" required [(ngModel)]="customer.job"></span>
+           <span><label for="Address" class="customer-label">Address:</label><input name="address" class="customer-input" type="text" required [(ngModel)]="customer.address"></span>
+           <span><label for="Email" class="customer-label">Email:</label><input name="email" class="customer-input" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required [(ngModel)]="customer.email"><input [value]="actionButton" class="customer-submit-button" type=submit [disabled]="!addCustomerForm.form.valid"/></span>
+        </form>
+        <button class="clear-form-button" (click)="clearForm(addCustomerForm)">Clear Form</button>
+    </fieldset>
+  </div>
+  <div class="div-search-customer"> 
+    <fieldset class="fieldset-search-customer">
+          <legend><b>Search Books Form</b></legend>
+        <form #searchCustomerForm="ngForm" (ngSubmit)="searchCustomersByType(searchCustomerForm)">
+           <label for="Search By" class="search-label">Search By:</label><select class="search-select" name="type" required [(ngModel)]="displayType"><option *ngFor="let type of types" [value]="type">{{type}}</option></select>
+         <ng-container *ngIf="displayType==='Email'"><label for="Email" class="search-label">Email:</label><input name="email" class="search-input" type="text" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required [(ngModel)]=email></ng-container>
+         <ng-container *ngIf="displayType==='Last Name'"><label for="Last Name" class="search-label">Last Name:</label><input name="lastName" class="search-input" type="text" required [(ngModel)]=lastName></ng-container>
+         <input value="Search" class="search-submit-button" type=submit [disabled]="!searchCustomerForm.form.valid"/>
+        </form>
+        <br/><br/>
+        <ng-container *ngIf="isNoResult && isFormSubmitted"><span class="span-no-result">No Result</span></ng-container>
+        <ng-container *ngIf="!isNoResult && isFormSubmitted">
+           <table>
+              <tr><th *ngFor="let head of headsTab">{{head}}</th><th></th><th></th></tr>
+              <tr class="{{customer.id}}" *ngFor="let customer of searchCustomersResult">
+                <td>{{customer.firstName}}</td>
+                <td>{{customer.lastName}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.job}}</td>
+                <td>{{customer.address}}</td>
+                <td><button value="Update" class="button-update-customer" (click)=setUpdateCustomer(customer)>Update</button></td><td><button value="Delete" class="button-delete-customer" (click)=deleteCustomer(customer)>Delete</button></td>
+              </tr>
+           </table>
+        </ng-container>
+    </fieldset>
+  </div>
+  <app-back-to-menu></app-back-to-menu>
+  
